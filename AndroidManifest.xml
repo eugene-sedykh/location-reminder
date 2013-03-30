@@ -27,7 +27,7 @@
         	android:label="@string/new_reminder_activity_name">
     	</activity>
     	<activity
-        	android:name="org.android.app.locationreminder.AddReminderLocation"
+        	android:name="org.android.app.locationreminder.AddLocationActivity"
         	android:label="@string/new_location_activity_name">
     	</activity>
     </application>
