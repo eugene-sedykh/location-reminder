@@ -7,9 +7,9 @@
         android:title="@string/add_new_reminder"/>
         
     <item
-        android:id="@+id/add_new_location"
+        android:id="@+id/view_locations"
         android:orderInCategory="2"
         android:showAsAction="never"
-        android:title="@string/add_new_location"/>
+        android:title="@string/view_locations"/>
 
 </menu>
