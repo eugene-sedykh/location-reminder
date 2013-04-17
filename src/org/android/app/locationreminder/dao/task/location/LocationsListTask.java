@@ -37,7 +37,7 @@ public class LocationsListTask extends RoboAsyncTask<List<Location>> {
         }
         for (Location location : locations) {
             this.locationsList.setText("");
-            this.locationsList.append(location.toString() + "/r/n");
+            this.locationsList.append(location.toString() + "\r\n");
         }
     }
 

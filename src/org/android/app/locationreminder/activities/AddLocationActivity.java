@@ -1,5 +1,6 @@
 package org.android.app.locationreminder.activities;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.telephony.gsm.GsmCellLocation;
@@ -8,8 +9,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 import org.android.app.locationreminder.R;
 import org.android.app.locationreminder.dao.LocationsService;
+import org.android.app.locationreminder.dao.domain.Location;
+import org.android.app.locationreminder.dao.task.location.LocationSaveTask;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
@@ -22,6 +26,7 @@ public class AddLocationActivity extends RoboActivity implements View.OnClickLis
     @InjectView(R.id.locationDetailsView) TextView locationDetails;
     @Inject TelephonyManager telephonyManager;
     @Inject LocationsService locationsService;
+    @Inject Provider<Context> contextProvider;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,17 +39,21 @@ public class AddLocationActivity extends RoboActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         GsmCellLocation cellLocation = (GsmCellLocation) telephonyManager.getCellLocation();
+        Location location = new Location();
+        location.setTitle(new Date().toString());
+        location.setMcc_mnc(telephonyManager.getNetworkOperator());
+        location.setLac(String.valueOf(cellLocation.getLac()));
+        location.setCid(String.valueOf(cellLocation.getCid()));
 
-        this.locationsService.createLocation(telephonyManager.getNetworkOperator(), String.valueOf(cellLocation.getLac()),
-                String.valueOf(cellLocation.getCid()));
+        new LocationSaveTask(this.contextProvider.get(),this.locationDetails,location).execute();
 
-        locationDetails.append(new Date().toString() + "\r\n");
-        locationDetails.append("Country ISO: " + telephonyManager.getNetworkCountryIso() + "\r\n");
-        locationDetails.append("Operator: " + telephonyManager.getNetworkOperator() + "\r\n");
-        locationDetails.append("Operator name: " + telephonyManager.getNetworkOperatorName() + "\r\n");
-        locationDetails.append("Sim operator: " + telephonyManager.getSimOperator() + "\r\n");
-        locationDetails.append("Sim operator name: " + telephonyManager.getSimOperatorName() + "\r\n");
-        locationDetails.append(cellLocation.toString() + "\r\n\r\n");
+//        locationDetails.append(new Date().toString() + "\r\n");
+//        locationDetails.append("Country ISO: " + telephonyManager.getNetworkCountryIso() + "\r\n");
+//        locationDetails.append("Operator: " + telephonyManager.getNetworkOperator() + "\r\n");
+//        locationDetails.append("Operator name: " + telephonyManager.getNetworkOperatorName() + "\r\n");
+//        locationDetails.append("Sim operator: " + telephonyManager.getSimOperator() + "\r\n");
+//        locationDetails.append("Sim operator name: " + telephonyManager.getSimOperatorName() + "\r\n");
+//        locationDetails.append(cellLocation.toString() + "\r\n\r\n");
     }
 
 }

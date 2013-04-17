@@ -21,7 +21,7 @@ public class DaoHelper extends SQLiteOpenHelper implements Provider<SQLiteDataba
 
     //DatabaseSQLStatement
     public static final String DATABASE_CREATE =
-        "Create table locations(" +
+        "Create table if not exists locations(" +
             "_id integer primary key autoincrement, " +
             "title text not null," +
             "mcc_mnc text not null," +

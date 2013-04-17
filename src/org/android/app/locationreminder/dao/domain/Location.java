@@ -5,6 +5,8 @@ package org.android.app.locationreminder.dao.domain;
  */
 public class Location {
 
+    private String title;
+
     private String mcc_mnc;
 
     private String lac;
@@ -14,6 +16,14 @@ public class Location {
     private float latitude = 0;
 
     private float longitude = 0;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public String getMcc_mnc() {
         return mcc_mnc;
@@ -58,8 +68,9 @@ public class Location {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("{");
-        builder.append("mcc+mnc=").append(this.mcc_mnc).append(";lac=").append(this.lac).append(";cid=").append(this.cid).
-                append(";latitude=").append(latitude).append(";longitude=").append(this.longitude).append("}");
+        builder.append("title=").append(this.getTitle()).append(";mcc+mnc=").append(this.mcc_mnc).append(";lac=").
+                append(this.lac).append(";cid=").append(this.cid).append(";latitude=").append(latitude).
+                append(";longitude=").append(this.longitude).append("}");
         return builder.toString();
     }
 }
