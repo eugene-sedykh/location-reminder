@@ -25,12 +25,15 @@ public class LocationsListActivity extends RoboActivity implements View.OnClickL
     @InjectView(R.id.locationsListView)
     TextView locationsList;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         newLocationButton.setOnClickListener(this);
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
         new LocationsListTask(this.contextProvider.get(), this.locationsList).execute();
     }
 
