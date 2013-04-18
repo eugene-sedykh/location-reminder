@@ -1,9 +1,10 @@
-package org.android.app.locationreminder;
+package org.android.app.locationreminder.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import org.android.app.locationreminder.R;
 import roboguice.activity.RoboActivity;
 
 public class RemindersListActivity extends RoboActivity {
@@ -28,8 +29,8 @@ public class RemindersListActivity extends RoboActivity {
         case R.id.add_new_reminder:
             intent = new Intent(this, AddReminderActivity.class);
             break;
-        case R.id.add_new_location:
-        	intent = new Intent(this, AddLocationActivity.class);
+        case R.id.view_locations:
+        	intent = new Intent(this, LocationsListActivity.class);
             break;
         default:
         	break;

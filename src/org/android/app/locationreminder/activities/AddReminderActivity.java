@@ -1,6 +1,7 @@
-package org.android.app.locationreminder;
+package org.android.app.locationreminder.activities;
 
 import android.os.Bundle;
+import org.android.app.locationreminder.R;
 import roboguice.activity.RoboActivity;
 
 public class AddReminderActivity extends RoboActivity {

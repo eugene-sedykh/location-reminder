@@ -8,14 +8,14 @@
     <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Get Location"
-            android:id="@+id/getLocationButton"
-            android:onClick="showCurrentLocation"/>
+            android:text="@string/add_new_location"
+            android:id="@+id/newLocationButton"
+            android:onClick="showNewLocationActivity"/>
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:text=""
-            android:id="@+id/locationDetailsView"
+            android:id="@+id/locationsListView"
             android:maxLines="1000"
             android:scrollbars="vertical"/>
 </LinearLayout>
