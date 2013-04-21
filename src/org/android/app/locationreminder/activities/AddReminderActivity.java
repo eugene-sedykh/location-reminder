@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -28,11 +29,11 @@ public class AddReminderActivity extends RoboFragmentActivity implements OnDateS
     @InjectView(R.id.newReminderTitle)
     TextView reminderTitle;
     
-    @InjectView(R.id.textViewDate)
-    TextView textViewDate;
-
-    @InjectView(R.id.textViewTime)
-    TextView textViewTime;
+    @InjectView(R.id.setDateButton)
+    Button setDateButton;
+    
+    @InjectView(R.id.setTimeButton)
+    Button setTimeButton;
     
     @InjectView(R.id.useLocationSwitcher)
     Switch useLocationSwitcher;
@@ -40,8 +41,8 @@ public class AddReminderActivity extends RoboFragmentActivity implements OnDateS
     @InjectView(R.id.location_label)
     TextView locationLabel;
     
-    @InjectView(R.id.editTextLocation)
-    EditText editTextLocation;
+    @InjectView(R.id.setLocationButton)
+    Button setLocationButton;
     
     boolean useLocation = false;
     
@@ -82,16 +83,16 @@ public class AddReminderActivity extends RoboFragmentActivity implements OnDateS
 	    
 	    if (on) {
 	        locationLabel.setAlpha(ENABLED_ALPHA);
-	        editTextLocation.setAlpha(ENABLED_ALPHA);
-	        editTextLocation.setFocusable(true);
-	        editTextLocation.setFocusableInTouchMode(true);
+	        setLocationButton.setAlpha(ENABLED_ALPHA);
+	        setLocationButton.setFocusable(true);
+	        setLocationButton.setFocusableInTouchMode(true);
 	        useLocation = true;
 	    } else {
 	        locationLabel.setAlpha(DISABLED_ALPHA);
-	        editTextLocation.setAlpha(DISABLED_ALPHA);
-	        editTextLocation.setText("");
-	        editTextLocation.setFocusable(false);
-	        editTextLocation.setFocusableInTouchMode(false);
+	        setLocationButton.setAlpha(DISABLED_ALPHA);
+	        setLocationButton.setText("");
+	        setLocationButton.setFocusable(false);
+	        setLocationButton.setFocusableInTouchMode(false);
 	        useLocation = false;
 	    }
 	}
@@ -103,7 +104,7 @@ public class AddReminderActivity extends RoboFragmentActivity implements OnDateS
 	
     
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        textViewDate.setText(month + "/" + day + "/" + year);
+        setDateButton.setText(month + "/" + day + "/" + year);
     }
     
 	public void setTimeButtonClick(View v) {
@@ -113,7 +114,7 @@ public class AddReminderActivity extends RoboFragmentActivity implements OnDateS
     
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-    	textViewTime.setText(hourOfDay + ":" + minute);
+    	setTimeButton.setText(hourOfDay + ":" + minute);
     	}
 
 }

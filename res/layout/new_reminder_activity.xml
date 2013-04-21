@@ -12,11 +12,13 @@
 
         <TextView
             android:id="@+id/reminderTitle"
-            android:layout_width="wrap_content"
+            style="@style/Header"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="REMINDER TITLE"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/holo_blue_light"
+            android:textSize="16dp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -45,11 +47,13 @@
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="wrap_content"
+            style="@style/Header"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="DATE AND TIME"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/holo_blue_light"
+            android:textSize="16dp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -63,16 +67,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
-            <TextView
-                android:id="@+id/textViewDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="01/01/2013"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
             <Button
-                android:id="@+id/setDate"
-                android:layout_width="wrap_content"
+                android:id="@+id/setDateButton"
+                style="@style/DateSpinnerLight"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="setDateButtonClick"
                 android:text="Set date" />
@@ -90,16 +88,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
-            <TextView
-                android:id="@+id/textViewTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="07:30"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
             <Button
-                android:id="@+id/button1"
-                android:layout_width="wrap_content"
+                android:id="@+id/setTimeButton"
+                style="@style/DateSpinnerLight"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="setTimeButtonClick"
                 android:text="Set time" />
@@ -160,12 +152,14 @@
 
         <TextView
             android:id="@+id/location_label"
-            android:layout_width="wrap_content"
+            style="@style/Header"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:alpha="0.3"
             android:text="LOCATION"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/holo_blue_light"
+            android:textSize="16dp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -175,14 +169,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <EditText
-            android:id="@+id/editTextLocation"
+        <Button
+            android:id="@+id/setLocationButton"
+            style="@style/DateSpinnerLight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:alpha="0.3"
-            android:ems="10"
-            android:focusable="false"
-            android:focusableInTouchMode="false" />
+            android:text="Set location" />
 
     </LinearLayout>
 
