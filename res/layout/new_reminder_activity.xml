@@ -11,11 +11,13 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/reminderTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Reminder title"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:text="REMINDER TITLE"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/holo_blue_light"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -25,7 +27,7 @@
         android:orientation="vertical" >
 
         <EditText
-            android:id="@+id/reminderTitle"
+            android:id="@+id/newReminderTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -45,8 +47,10 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date and time"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:text="DATE AND TIME"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/holo_blue_light"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -55,26 +59,66 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <EditText
-            android:id="@+id/editTextDate"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="date" />
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/textViewDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="01/01/2013"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/setDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="setDateButtonClick"
+                android:text="Set date" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
+    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <EditText
-            android:id="@+id/editTextTime"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/textViewTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="07:30"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="setTimeButtonClick"
+                android:text="Set time" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/workAroundForSpace"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="time" />
+            android:text="                            " />
 
     </LinearLayout>
 
@@ -87,7 +131,25 @@
             android:id="@+id/useLocationSwitcher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Use location?" />
+            android:text="Use location?"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="18sp"
+            android:textStyle="bold" 
+            android:onClick="onSwitchClicked"/>
+
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/workAroundForSpace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:text="                            " />
 
     </LinearLayout>
 
@@ -97,11 +159,14 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/location_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Location"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:alpha="0.3"
+            android:text="LOCATION"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/holo_blue_light"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -114,8 +179,14 @@
             android:id="@+id/editTextLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10" />
+            android:alpha="0.3"
+            android:ems="10"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
 
     </LinearLayout>
 
+
+
 </LinearLayout>
+
