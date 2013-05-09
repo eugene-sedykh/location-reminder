@@ -11,11 +11,15 @@
             android:text="@string/add_new_location"
             android:id="@+id/newLocationButton"
             android:onClick="showNewLocationActivity"/>
-    <TextView
+    <!--TextView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:text=""
             android:id="@+id/locationsListView"
             android:maxLines="1000"
-            android:scrollbars="vertical"/>
+            android:scrollbars="vertical"/-->
+    <ListView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"/>
 </LinearLayout>
