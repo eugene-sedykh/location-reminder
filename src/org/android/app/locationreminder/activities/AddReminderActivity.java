@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import org.android.app.locationreminder.R;
 import org.android.app.locationreminder.fragments.DatePickerFragment;
+import org.android.app.locationreminder.fragments.LocationSelectionDialogFragment;
 import org.android.app.locationreminder.fragments.TimePickerFragment;
 
 import roboguice.activity.RoboFragmentActivity;
@@ -84,15 +85,13 @@ public class AddReminderActivity extends RoboFragmentActivity implements OnDateS
 	    if (on) {
 	        locationLabel.setAlpha(ENABLED_ALPHA);
 	        setLocationButton.setAlpha(ENABLED_ALPHA);
-	        setLocationButton.setFocusable(true);
-	        setLocationButton.setFocusableInTouchMode(true);
+	        setLocationButton.setClickable(true);
 	        useLocation = true;
 	    } else {
 	        locationLabel.setAlpha(DISABLED_ALPHA);
 	        setLocationButton.setAlpha(DISABLED_ALPHA);
 	        setLocationButton.setText("");
-	        setLocationButton.setFocusable(false);
-	        setLocationButton.setFocusableInTouchMode(false);
+	        setLocationButton.setClickable(false);
 	        useLocation = false;
 	    }
 	}
@@ -116,5 +115,10 @@ public class AddReminderActivity extends RoboFragmentActivity implements OnDateS
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
     	setTimeButton.setText(hourOfDay + ":" + minute);
     	}
+    
+	public void setLocationsButtonClick(View v) {
+		DialogFragment newLocationsFragment = new LocationSelectionDialogFragment();
+		newLocationsFragment.show(getFragmentManager(), "location selection");
+	}
 
 }
