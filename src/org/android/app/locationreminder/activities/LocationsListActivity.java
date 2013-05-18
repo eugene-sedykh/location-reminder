@@ -3,6 +3,8 @@ package org.android.app.locationreminder.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import com.google.inject.Inject;
@@ -18,48 +20,28 @@ import roboguice.inject.InjectView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LocationsListActivity extends RoboActivity implements View.OnClickListener {
-    @InjectView(R.id.newLocationButton)
-    Button newLocationButton;
+public class LocationsListActivity extends RoboListActivity implements View.OnClickListener {
 
     @Inject
     Provider<Context> contextProvider;
 
-    @InjectView(R.layout.locations_list_activity)
-    View contentView;
+    private List<Location> locations;
 
-    @InjectView(android.R.id.list)
-    ListView locationsList;
+    private ArrayAdapter<Location> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.locations_list_activity);
-//        ArrayAdapter<Location> adapter = new ArrayAdapter<Location>(this,
-//                this.locationsList.getId(), getLocations());
-        List<String> data = new ArrayList<String>();
-        data.add("first");
-        data.add("second");
-        data.add("third");
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.contextProvider.get(),this.locationsList.getId(),data);
-        Toast.makeText(this.contextProvider.get(), "Adapter created", 5);
-        //setContentView(this.locationsList);
-        this.locationsList.setAdapter(adapter);
-        Toast.makeText(this.contextProvider.get(), "Adapter has been set", 5);
-        newLocationButton.setOnClickListener(this);
+        this.locations = getLocations();
+        this.adapter = new ArrayAdapter<Location>(this, android.R.layout.simple_list_item_1, this.locations);
+        getListView().setAdapter(this.adapter);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-//        try {
-//            List<Location> locations = new LocationsListTask(this.contextProvider.get()).call();
-//            ArrayAdapter<Location> adapter = new ArrayAdapter<Location>(this,
-//                    android.R.layout.simple_list_item_1, locations);
-////            setListAdapter(adapter);
-//        } catch (Exception e) {
-//            Toast.makeText(this.contextProvider.get(),e.toString(),5);
-//        }
+        this.locations = getLocations();
+        this.adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -76,4 +58,15 @@ public class LocationsListActivity extends RoboActivity implements View.OnClickL
         return null;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.locations_list, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        startActivity(new Intent(this, AddLocationActivity.class));
+        return true;
+    }
 }

@@ -46,14 +46,6 @@ public class AddLocationActivity extends RoboActivity implements View.OnClickLis
         location.setCid(String.valueOf(cellLocation.getCid()));
 
         new LocationSaveTask(this.contextProvider.get(),this.locationDetails,location).execute();
-
-//        locationDetails.append(new Date().toString() + "\r\n");
-//        locationDetails.append("Country ISO: " + telephonyManager.getNetworkCountryIso() + "\r\n");
-//        locationDetails.append("Operator: " + telephonyManager.getNetworkOperator() + "\r\n");
-//        locationDetails.append("Operator name: " + telephonyManager.getNetworkOperatorName() + "\r\n");
-//        locationDetails.append("Sim operator: " + telephonyManager.getSimOperator() + "\r\n");
-//        locationDetails.append("Sim operator name: " + telephonyManager.getSimOperatorName() + "\r\n");
-//        locationDetails.append(cellLocation.toString() + "\r\n\r\n");
     }
 
 }
