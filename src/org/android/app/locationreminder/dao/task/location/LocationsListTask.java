@@ -1,7 +1,6 @@
 package org.android.app.locationreminder.dao.task.location;
 
 import android.content.Context;
-import android.widget.TextView;
 import com.google.inject.Inject;
 import org.android.app.locationreminder.dao.LocationsService;
 import org.android.app.locationreminder.dao.domain.Location;
@@ -17,11 +16,8 @@ public class LocationsListTask extends RoboAsyncTask<List<Location>> {
     @Inject
     LocationsService locationsService;
 
-    TextView locationsList;
-
-    public LocationsListTask(Context context, TextView locationsList) {
+    public LocationsListTask(Context context) {
         super(context);
-        this.locationsList = locationsList;
     }
 
     @Override
@@ -29,21 +25,21 @@ public class LocationsListTask extends RoboAsyncTask<List<Location>> {
         return this.locationsService.getAll();
     }
 
-    @Override
-    protected void onSuccess(List<Location> locations) {
-        if (locations == null || locations.isEmpty()) {
-            this.locationsList.setText("Locations not found");
-            return;
-        }
+//    @Override
+//    protected void onSuccess(List<Location> locations) {
+//        if (locations == null || locations.isEmpty()) {
+//            this.locationsList.setText("Locations not found");
+//            return;
+//        }
+//
+//        this.locationsList.setText("");
+//        for (Location location : locations) {
+//            this.locationsList.append(location.toString() + "\r\n\r\n");
+//        }
+//    }
 
-        this.locationsList.setText("");
-        for (Location location : locations) {
-            this.locationsList.append(location.toString() + "\r\n\r\n");
-        }
-    }
-
-    @Override
-    protected void onException(Exception e) {
-        this.locationsList.setText(e.toString());
-    }
+//    @Override
+//    protected void onException(Exception e) {
+//        this.locationsList.setText(e.toString());
+//    }
 }
