@@ -16,7 +16,7 @@ public class LocationSelectionDialogFragment extends DialogFragment {
 	ArrayList<Integer> mSelectedItems;
 
     public interface NoticeDialogListener {
-        public void onDialogPositiveClick(DialogFragment dialog);
+        public void onDialogPositiveClick(DialogFragment dialog, String resultLocations);
         public void onDialogNegativeClick(DialogFragment dialog);
     }
 
@@ -64,7 +64,15 @@ public class LocationSelectionDialogFragment extends DialogFragment {
                    public void onClick(DialogInterface dialog, int id) {
                        // User clicked OK, so save the mSelectedItems results somewhere
                        // or return them to the component that opened the dialog
-                       mListener.onDialogPositiveClick(LocationSelectionDialogFragment.this);
+                       String resultString = "";
+                       for (int item: mSelectedItems) {
+                           if (resultString == "") {
+                               resultString = resultString + locations[item];
+                           } else {
+                               resultString = resultString + ", " + locations[item];
+                           }
+                       }
+                       mListener.onDialogPositiveClick(LocationSelectionDialogFragment.this, resultString);
                    }
                })
                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

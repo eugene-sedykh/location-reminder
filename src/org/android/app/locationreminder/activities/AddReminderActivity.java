@@ -19,6 +19,8 @@ import roboguice.activity.RoboFragmentActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
 
+import java.util.ArrayList;
+
 @ContentView(R.layout.new_reminder_activity)
 public class AddReminderActivity extends RoboFragmentActivity implements OnDateSetListener, OnTimeSetListener, LocationSelectionDialogFragment.NoticeDialogListener {
 
@@ -119,9 +121,13 @@ public class AddReminderActivity extends RoboFragmentActivity implements OnDateS
 	}
 
     @Override
-    public void onDialogPositiveClick(DialogFragment dialog) {
+    public void onDialogPositiveClick(DialogFragment dialog, String resultLocations) {
         // User touched the dialog's positive button
-        setLocationButton.setText("ikea");
+        if (resultLocations != "") {
+            setLocationButton.setText(resultLocations);
+        } else {
+            setLocationButton.setText("Set location");
+        }
     }
 
     @Override
