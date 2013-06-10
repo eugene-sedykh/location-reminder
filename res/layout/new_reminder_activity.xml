@@ -127,7 +127,7 @@
             android:textColor="@android:color/holo_blue_light"
             android:textSize="18sp"
             android:textStyle="bold" 
-            android:onClick="onSwitchClicked"/>
+            android:onClick="onSwitchClicked" android:checked="false"/>
 
     </LinearLayout>
     

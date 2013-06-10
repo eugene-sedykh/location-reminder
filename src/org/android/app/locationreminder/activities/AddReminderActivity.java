@@ -4,16 +4,11 @@ import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.TimePicker;
-import android.widget.Toast;
+import android.widget.*;
 
 import org.android.app.locationreminder.R;
 import org.android.app.locationreminder.fragments.DatePickerFragment;
@@ -25,7 +20,7 @@ import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
 
 @ContentView(R.layout.new_reminder_activity)
-public class AddReminderActivity extends RoboFragmentActivity implements OnDateSetListener, OnTimeSetListener {
+public class AddReminderActivity extends RoboFragmentActivity implements OnDateSetListener, OnTimeSetListener, LocationSelectionDialogFragment.NoticeDialogListener {
 
     @InjectView(R.id.newReminderTitle)
     TextView reminderTitle;
@@ -49,6 +44,7 @@ public class AddReminderActivity extends RoboFragmentActivity implements OnDateS
     
     static final float DISABLED_ALPHA = 0.3f;
     static final float ENABLED_ALPHA = 1f;
+    private static final String TAG = "NewReminderActivity";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,11 +74,12 @@ public class AddReminderActivity extends RoboFragmentActivity implements OnDateS
 	    Toast.makeText(this, "Selected Item: " + item.getTitle(), Toast.LENGTH_SHORT).show();
 	    return true;
 	}
-	
-	public void onSwitchClicked(View view) {
-	    boolean on = ((Switch) view).isChecked();
+
+    public void onSwitchClicked(View view) {
+	    boolean isChecked = ((Switch) view).isChecked();
+        Log.v(TAG, "Switcher was changed: " + isChecked);
 	    
-	    if (on) {
+	    if (isChecked) {
 	        locationLabel.setAlpha(ENABLED_ALPHA);
 	        setLocationButton.setAlpha(ENABLED_ALPHA);
 	        setLocationButton.setClickable(true);
@@ -90,7 +87,7 @@ public class AddReminderActivity extends RoboFragmentActivity implements OnDateS
 	    } else {
 	        locationLabel.setAlpha(DISABLED_ALPHA);
 	        setLocationButton.setAlpha(DISABLED_ALPHA);
-	        setLocationButton.setText("");
+	        setLocationButton.setText("Set location");
 	        setLocationButton.setClickable(false);
 	        useLocation = false;
 	    }
@@ -120,5 +117,16 @@ public class AddReminderActivity extends RoboFragmentActivity implements OnDateS
 		DialogFragment newLocationsFragment = new LocationSelectionDialogFragment();
 		newLocationsFragment.show(getFragmentManager(), "location selection");
 	}
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        // User touched the dialog's positive button
+        setLocationButton.setText("ikea");
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+        // User touched the dialog's negative button
+    }
 
 }
