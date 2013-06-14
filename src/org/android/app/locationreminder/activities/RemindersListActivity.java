@@ -1,19 +1,67 @@
 package org.android.app.locationreminder.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.Toast;
+import com.google.inject.Inject;
 import org.android.app.locationreminder.R;
-import roboguice.activity.RoboActivity;
+import org.android.app.locationreminder.dao.domain.Reminder;
+import org.android.app.locationreminder.dao.task.reminder.RemindersListTask;
+import roboguice.activity.RoboListActivity;
+import com.google.inject.Provider;
 
-public class RemindersListActivity extends RoboActivity {
+import java.util.List;
+
+public class RemindersListActivity extends RoboListActivity {
+    @Inject
+    Provider<Context> contextProvider;
+
+    private List<Reminder> reminders;
+
+    private ArrayAdapter<Reminder> adapter;
+
+    final String TAG = "Remnders List";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+        Log.e(TAG, "onCreate");
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.reminders_list_activity);
+        this.reminders = getReminders();
+        this.adapter = new ArrayAdapter<Reminder>(this, android.R.layout.simple_list_item_1, this.reminders);
+        getListView().setAdapter(this.adapter);
 	}
+
+    @Override
+    protected void onStart() {
+        Log.e(TAG, "onStart");
+        super.onStart();
+        this.reminders = getReminders();
+        this.adapter.notifyDataSetChanged();
+        getListView().setAdapter(this.adapter);
+    }
+
+    @Override
+    protected void onResume() {
+        Log.e(TAG, "onResume");
+        super.onResume();
+        this.reminders = getReminders();
+        this.adapter.notifyDataSetChanged();
+        getListView().setAdapter(this.adapter);
+    }
+
+    private List<Reminder> getReminders () {
+        try {
+            return new RemindersListTask(this.contextProvider.get()).call();
+        } catch (Exception e) {
+            Toast.makeText(this.contextProvider.get(), e.toString(), 5);
+        }
+        return null;
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

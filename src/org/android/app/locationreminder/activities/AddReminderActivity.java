@@ -3,6 +3,7 @@ package org.android.app.locationreminder.activities;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog.OnTimeSetListener;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -10,7 +11,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 
+import com.google.inject.Inject;
+import com.google.inject.Provider;
 import org.android.app.locationreminder.R;
+import org.android.app.locationreminder.dao.domain.Reminder;
+import org.android.app.locationreminder.dao.task.reminder.ReminderSaveTask;
 import org.android.app.locationreminder.fragments.DatePickerFragment;
 import org.android.app.locationreminder.fragments.LocationSelectionDialogFragment;
 import org.android.app.locationreminder.fragments.TimePickerFragment;
@@ -41,6 +46,9 @@ public class AddReminderActivity extends RoboFragmentActivity implements OnDateS
     
     @InjectView(R.id.setLocationButton)
     Button setLocationButton;
+
+    @Inject
+    Provider<Context> contextProvider;
     
     boolean useLocation = false;
     
@@ -72,8 +80,17 @@ public class AddReminderActivity extends RoboFragmentActivity implements OnDateS
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		//test implementation
 	    Toast.makeText(this, "Selected Item: " + item.getTitle(), Toast.LENGTH_SHORT).show();
+        if (item.getTitle().equals("Done")) {
+            Reminder reminder = new Reminder();
+            reminder.setReminderTitle(reminderTitle.getText().toString());
+            reminder.setDate(setDateButton.getText().toString());
+            reminder.setLocationId(setLocationButton.getText().toString());
+            new ReminderSaveTask(this.contextProvider.get(), reminder).execute();
+            this.finish();
+        }  else if (item.getTitle().equals("Cancel")) {
+            this.finish();
+        }
 	    return true;
 	}
 
