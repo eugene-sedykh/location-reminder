@@ -21,9 +21,9 @@ public class RemindersListActivity extends RoboListActivity {
     @Inject
     Provider<Context> contextProvider;
 
-    private List<Reminder> reminders;
+    private List<String> reminders;
 
-    private ArrayAdapter<Reminder> adapter;
+    private ArrayAdapter<String> adapter;
 
     final String TAG = "Remnders List";
 
@@ -32,7 +32,7 @@ public class RemindersListActivity extends RoboListActivity {
         Log.e(TAG, "onCreate");
 		super.onCreate(savedInstanceState);
         this.reminders = getReminders();
-        this.adapter = new ArrayAdapter<Reminder>(this, android.R.layout.simple_list_item_1, this.reminders);
+        this.adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, this.reminders);
         getListView().setAdapter(this.adapter);
 	}
 
@@ -42,19 +42,9 @@ public class RemindersListActivity extends RoboListActivity {
         super.onStart();
         this.reminders = getReminders();
         this.adapter.notifyDataSetChanged();
-        getListView().setAdapter(this.adapter);
     }
 
-    @Override
-    protected void onResume() {
-        Log.e(TAG, "onResume");
-        super.onResume();
-        this.reminders = getReminders();
-        this.adapter.notifyDataSetChanged();
-        getListView().setAdapter(this.adapter);
-    }
-
-    private List<Reminder> getReminders () {
+    private List<String> getReminders () {
         try {
             return new RemindersListTask(this.contextProvider.get()).call();
         } catch (Exception e) {

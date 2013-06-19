@@ -18,28 +18,29 @@ public class RemindersService extends BaseService{
         super(helper);
     }
 
-    public List<Reminder> getAllReminders() {
-        List<Reminder> locations = new ArrayList<Reminder>();
+    public List<String> getAllReminders() {
+        List<String> reminders = new ArrayList<String>();
         Cursor cursor = getDatabase().query(DatabaseTables.REMINDERS, new String[]{DatabaseFields.REMINDER_TITLE,
                 DatabaseFields.DATE, DatabaseFields.LOCATION_ID},null,null,null,null,null);
 
         if (cursor != null) {
             while (cursor.moveToNext()) {
-                locations.add(convertToReminder(cursor));
+                reminders.add(convertToReminder(cursor));
             }
             cursor.close();
         }
 
-        return locations;
+        return reminders;
     }
 
-    private Reminder convertToReminder(Cursor cursor) {
-        Reminder reminder = new Reminder();
+    private String convertToReminder(Cursor cursor) {
+        /*Reminder reminder = new Reminder();
         reminder.setReminderTitle(cursor.getString(0));
         reminder.setDate(cursor.getString(1));
         reminder.setLocationId(cursor.getString(2));
 
-        return reminder;
+        return reminder;           */
+        return cursor.getString(0);
     }
 
     public long saveReminder(Reminder reminder) {

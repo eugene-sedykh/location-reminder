@@ -8,7 +8,7 @@ import roboguice.util.RoboAsyncTask;
 
 import java.util.List;
 
-public class RemindersListTask extends RoboAsyncTask<List<Reminder>>{
+public class RemindersListTask extends RoboAsyncTask<List<String>>{
     @Inject
     RemindersService remindersService;
 
@@ -17,7 +17,7 @@ public class RemindersListTask extends RoboAsyncTask<List<Reminder>>{
     }
 
     @Override
-    public List<Reminder> call() throws Exception {
+    public List<String> call() throws Exception {
         return this.remindersService.getAllReminders();
     }
 }
