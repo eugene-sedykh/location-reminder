@@ -34,12 +34,7 @@ public class RemindersService extends BaseService{
     }
 
     private String convertToReminder(Cursor cursor) {
-        /*Reminder reminder = new Reminder();
-        reminder.setReminderTitle(cursor.getString(0));
-        reminder.setDate(cursor.getString(1));
-        reminder.setLocationId(cursor.getString(2));
-
-        return reminder;           */
+        // For the first implementation we return only the title of a reminder
         return cursor.getString(0);
     }
 

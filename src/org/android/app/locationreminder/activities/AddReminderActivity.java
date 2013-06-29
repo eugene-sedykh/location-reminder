@@ -51,23 +51,25 @@ public class AddReminderActivity extends RoboFragmentActivity implements OnDateS
     Provider<Context> contextProvider;
     
     boolean useLocation = false;
-    
     static final float DISABLED_ALPHA = 0.3f;
     static final float ENABLED_ALPHA = 1f;
     private static final String TAG = "NewReminderActivity";
+    private static final String DATE_PICKER_FRAGMENT_TAG_NAME = "date picker";
+    private static final String TIME_PICKER_FRAGMENT_TAG_NAME = "time picker";
+    private static final String LOCATION_PICKER_FRAGMENT_TAG_NAME = "location picker";
+    private static final String DATE_DELIMETER = "/";
+    private static final String TIME_DELIMETER = ":";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 	
-	    MenuItem actionItemDone = menu.add("Done");
-	    MenuItem actionItemCancel = menu.add("Cancel");
+	    MenuItem actionItemDone = menu.add(getString(R.string.add_reminder_menu_item_done));
+	    MenuItem actionItemCancel = menu.add(getString(R.string.add_reminder_menu_item_cancel));
 	
 	    actionItemDone.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 	    actionItemCancel.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
@@ -80,70 +82,73 @@ public class AddReminderActivity extends RoboFragmentActivity implements OnDateS
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    Toast.makeText(this, "Selected Item: " + item.getTitle(), Toast.LENGTH_SHORT).show();
-        if (item.getTitle().equals("Done")) {
-            Reminder reminder = new Reminder();
-            reminder.setReminderTitle(reminderTitle.getText().toString());
-            reminder.setDate(setDateButton.getText().toString());
-            reminder.setLocationId(setLocationButton.getText().toString());
-            new ReminderSaveTask(this.contextProvider.get(), reminder).execute();
+        if (item.getTitle().equals(getString(R.string.add_reminder_menu_item_done))) {
+            saveNewReminder();
             this.finish();
-        }  else if (item.getTitle().equals("Cancel")) {
+        }  else if (item.getTitle().equals(getString(R.string.add_reminder_menu_item_cancel))) {
             this.finish();
         }
 	    return true;
 	}
 
+    private void saveNewReminder() {
+        Reminder reminder = new Reminder();
+        reminder.setReminderTitle(reminderTitle.getText().toString());
+        reminder.setDate(setDateButton.getText().toString());
+        reminder.setLocationId(setLocationButton.getText().toString());
+        new ReminderSaveTask(this.contextProvider.get(), reminder).execute();
+    }
+
     public void onSwitchClicked(View view) {
 	    boolean isChecked = ((Switch) view).isChecked();
         Log.v(TAG, "Switcher was changed: " + isChecked);
-	    
 	    if (isChecked) {
-	        locationLabel.setAlpha(ENABLED_ALPHA);
-	        setLocationButton.setAlpha(ENABLED_ALPHA);
-	        setLocationButton.setClickable(true);
-	        useLocation = true;
+            setupLocationSelectionView(ENABLED_ALPHA, true, true);
 	    } else {
-	        locationLabel.setAlpha(DISABLED_ALPHA);
-	        setLocationButton.setAlpha(DISABLED_ALPHA);
-	        setLocationButton.setText("Set location");
-	        setLocationButton.setClickable(false);
-	        useLocation = false;
+            setupLocationSelectionView(DISABLED_ALPHA, true, true);
 	    }
 	}
-	
-	public void setDateButtonClick(View v) {
+
+    private void setupLocationSelectionView(float alpha, Boolean isClickable, Boolean isLocationUsable) {
+        locationLabel.setAlpha(alpha);
+        setLocationButton.setAlpha(alpha);
+        setLocationButton.setText(getString(R.string.add_reminder_set_location_label));
+        setLocationButton.setClickable(isClickable);
+        useLocation = isLocationUsable;
+    }
+
+    public void setDateButtonClick(View v) {
 	    DialogFragment newDateFragment = new DatePickerFragment();
-	    newDateFragment.show(getFragmentManager(), "date picker");
+	    newDateFragment.show(getFragmentManager(), DATE_PICKER_FRAGMENT_TAG_NAME);
 	}
 	
     
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        setDateButton.setText(month + "/" + day + "/" + year);
+        setDateButton.setText(month + DATE_DELIMETER + day + DATE_DELIMETER + year);
     }
     
 	public void setTimeButtonClick(View v) {
 		DialogFragment newTimeFragment = new TimePickerFragment();
-	    newTimeFragment.show(getFragmentManager(), "time picker");
+	    newTimeFragment.show(getFragmentManager(), TIME_PICKER_FRAGMENT_TAG_NAME);
 	}
     
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-    	setTimeButton.setText(hourOfDay + ":" + minute);
+    	setTimeButton.setText(hourOfDay + TIME_DELIMETER + minute);
     	}
     
 	public void setLocationsButtonClick(View v) {
 		DialogFragment newLocationsFragment = new LocationSelectionDialogFragment();
-		newLocationsFragment.show(getFragmentManager(), "location selection");
+		newLocationsFragment.show(getFragmentManager(), LOCATION_PICKER_FRAGMENT_TAG_NAME);
 	}
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog, String resultLocations) {
         // User touched the dialog's positive button
-        if (resultLocations != "") {
+        if (!resultLocations.equals("")) {
             setLocationButton.setText(resultLocations);
         } else {
-            setLocationButton.setText("Set location");
+            setLocationButton.setText(getString(R.string.add_reminder_set_location_label));
         }
     }
 

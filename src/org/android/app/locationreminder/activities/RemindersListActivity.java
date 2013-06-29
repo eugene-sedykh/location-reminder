@@ -20,12 +20,9 @@ import java.util.List;
 public class RemindersListActivity extends RoboListActivity {
     @Inject
     Provider<Context> contextProvider;
-
     private List<String> reminders;
-
     private ArrayAdapter<String> adapter;
-
-    final String TAG = "Remnders List";
+    final String TAG = "Reminders List";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

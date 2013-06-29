@@ -8,6 +8,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import org.android.app.locationreminder.R;
 import roboguice.activity.RoboActivity;
 import roboguice.fragment.RoboDialogFragment;
 
@@ -43,7 +44,7 @@ public class LocationSelectionDialogFragment extends DialogFragment {
         mSelectedItems = new ArrayList();  // Where we track the selected items
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Set the dialog title
-        builder.setTitle("Select location")
+        builder.setTitle(getString(R.string.location_picker_title))
         // Specify the list array, the items to be selected by default (null for none),
         // and the listener through which to receive callbacks when items are selected
                .setMultiChoiceItems(locations, null, new DialogInterface.OnMultiChoiceClickListener() {
@@ -57,9 +58,10 @@ public class LocationSelectionDialogFragment extends DialogFragment {
                            // Else, if the item is already in the array, remove it
                            mSelectedItems.remove(Integer.valueOf(which));
                        }
-                   }})
+                   }
+               })
         // Set the action buttons
-               .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+               .setPositiveButton(getString(R.string.location_picker_positive_button), new DialogInterface.OnClickListener() {
                    @Override
                    public void onClick(DialogInterface dialog, int id) {
                        // User clicked OK, so save the mSelectedItems results somewhere
@@ -75,7 +77,7 @@ public class LocationSelectionDialogFragment extends DialogFragment {
                        mListener.onDialogPositiveClick(LocationSelectionDialogFragment.this, resultString);
                    }
                })
-               .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+               .setNegativeButton(getString(R.string.location_picker_negative_button), new DialogInterface.OnClickListener() {
                    @Override
                    public void onClick(DialogInterface dialog, int id) {
                        mListener.onDialogNegativeClick(LocationSelectionDialogFragment.this);

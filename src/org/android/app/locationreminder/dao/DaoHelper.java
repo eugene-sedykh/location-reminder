@@ -31,11 +31,11 @@ public class DaoHelper extends SQLiteOpenHelper implements Provider<SQLiteDataba
             "latitude real)";
 
     public static final String REMINDERS_TABLE_CREATE =
-            "Create table if not exists reminders(" +
-                    "_id integer primary key autoincrement, " +
-                    "reminder_title text not null," +
-                    "date text," +
-                    "locationId text)";
+        "Create table if not exists reminders(" +
+            "_id integer primary key autoincrement, " +
+            "reminder_title text not null," +
+            "date text," +
+            "locationId text)";
 
     @Inject
     public DaoHelper(Provider<Context> contextProvider) {

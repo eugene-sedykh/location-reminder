@@ -2,18 +2,16 @@ package org.android.app.locationreminder.dao.domain;
 
 public class Reminder {
 
-    private String reminder_title;
-
+    private String reminderTitle;
     private String date;
-
     private String locationId;
 
     public String getReminderTitle() {
-        return reminder_title;
+        return reminderTitle;
     }
 
-    public void setReminderTitle(String reminder_title) {
-        this.reminder_title = reminder_title;
+    public void setReminderTitle(String reminderTitle) {
+        this.reminderTitle = reminderTitle;
     }
 
     public String getDate() {
