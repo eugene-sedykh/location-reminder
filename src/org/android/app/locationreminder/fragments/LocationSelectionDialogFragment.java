@@ -66,7 +66,7 @@ public class LocationSelectionDialogFragment extends DialogFragment {
                        // or return them to the component that opened the dialog
                        String resultString = "";
                        for (int item: mSelectedItems) {
-                           if (resultString == "") {
+                           if (resultString.equals("")) {
                                resultString = resultString + locations[item];
                            } else {
                                resultString = resultString + ", " + locations[item];
