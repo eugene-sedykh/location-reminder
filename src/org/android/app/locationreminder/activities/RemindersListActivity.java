@@ -29,7 +29,7 @@ public class RemindersListActivity extends RoboListActivity {
         Log.e(TAG, "onCreate");
 		super.onCreate(savedInstanceState);
         this.reminders = getReminders();
-        this.adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, this.reminders);
+        this.adapter = new ArrayAdapter<String>(this, R.layout.reminders_list_item, this.reminders);
         getListView().setAdapter(this.adapter);
 	}
 

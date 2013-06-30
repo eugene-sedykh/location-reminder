@@ -1,150 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/reminderTitle"
+        style="@style/Header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:focusableInTouchMode="false"
-        android:orientation="vertical" >
+        android:text="@string/add_reminder_reminder_title_label"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="16dp"
+        android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/reminderTitle"
-            style="@style/Header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="REMINDER TITLE"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/holo_blue_light"
-            android:textSize="16dp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-    <LinearLayout
+    <EditText
+        android:id="@+id/newReminderTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:ems="10"
+        android:inputType="textMultiLine" >
+    </EditText>
 
-        <EditText
-            android:id="@+id/newReminderTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textMultiLine" >
-
-            <requestFocus />
-        </EditText>
-
-    </LinearLayout>
-
-    <LinearLayout
+    <TextView
+        android:id="@+id/textView2"
+        style="@style/Header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:text="@string/add_reminder_date_and_time_label"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="16dp"
+        android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textView2"
-            style="@style/Header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="DATE AND TIME"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/holo_blue_light"
-            android:textSize="16dp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-    <LinearLayout
+    <Button
+        android:id="@+id/setDateButton"
+        style="@style/DateSpinnerLight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:onClick="setDateButtonClick"
+        android:text="@string/add_reminder_set_date_button_title" />
 
-            <Button
-                android:id="@+id/setDateButton"
-                style="@style/DateSpinnerLight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="setDateButtonClick"
-                android:text="Set date" />
-
-    </LinearLayout>
-    
-    <LinearLayout
+    <Button
+        android:id="@+id/setTimeButton"
+        style="@style/DateSpinnerLight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:onClick="setTimeButtonClick"
+        android:text="@string/add_reminder_set_time_button_title" />
 
-            <Button
-                android:id="@+id/setTimeButton"
-                style="@style/DateSpinnerLight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="setTimeButtonClick"
-                android:text="Set time" />
+    <Switch
+        android:id="@+id/useLocationSwitcher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_reminder_use_location_switcher_title"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:onClick="onSwitchClicked" android:checked="false"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="5dp"/>
 
-    </LinearLayout>
-
-    <LinearLayout
+    <TextView
+        android:id="@+id/location_label"
+        style="@style/Header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:alpha="0.3"
+        android:text="@string/add_reminder_location_label"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="16dp"
+        android:textStyle="bold" />
 
-        <Switch
-            android:id="@+id/useLocationSwitcher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Use location?"
-            android:textColor="@android:color/holo_blue_light"
-            android:textSize="18sp"
-            android:textStyle="bold" 
-            android:onClick="onSwitchClicked" android:checked="false"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="5dp"/>
-
-    </LinearLayout>
-
-    <LinearLayout
+    <Button
+        android:id="@+id/setLocationButton"
+        style="@style/DateSpinnerLight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/location_label"
-            style="@style/Header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:alpha="0.3"
-            android:text="LOCATION"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/holo_blue_light"
-            android:textSize="16dp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <Button
-            android:id="@+id/setLocationButton"
-            style="@style/DateSpinnerLight"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:alpha="0.3"
-            android:clickable="false"
-            android:onClick="setLocationsButtonClick"
-            android:text="Set location" />
-
-    </LinearLayout>
-
-
+        android:alpha="0.3"
+        android:clickable="false"
+        android:onClick="setLocationsButtonClick"
+        android:text="@string/add_reminder_set_location_label" />
 
 </LinearLayout>
 

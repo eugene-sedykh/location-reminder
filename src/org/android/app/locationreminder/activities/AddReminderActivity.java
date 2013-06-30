@@ -63,6 +63,7 @@ public class AddReminderActivity extends RoboFragmentActivity implements OnDateS
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        reminderTitle.requestFocus();
 	}
 
 	@Override
