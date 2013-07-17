@@ -10,6 +10,7 @@ import android.widget.*;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import org.android.app.locationreminder.R;
+import org.android.app.locationreminder.dao.constant.ExtraKeys;
 import org.android.app.locationreminder.dao.domain.Location;
 import org.android.app.locationreminder.dao.task.location.LocationsListTask;
 import roboguice.activity.RoboActivity;
@@ -20,10 +21,7 @@ import roboguice.inject.InjectView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LocationsListActivity extends RoboListActivity implements View.OnClickListener {
-
-    @Inject
-    Provider<Context> contextProvider;
+public class LocationsListActivity extends RoboListActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     private List<Location> locations;
 
@@ -35,12 +33,18 @@ public class LocationsListActivity extends RoboListActivity implements View.OnCl
         this.locations = getLocations();
         this.adapter = new ArrayAdapter<Location>(this, android.R.layout.simple_list_item_1, this.locations);
         getListView().setAdapter(this.adapter);
+        getListView().setOnItemClickListener(this);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        this.locations = getLocations();
+        refreshDataSet();
+    }
+
+    private void refreshDataSet() {
+        this.adapter.clear();
+        this.adapter.addAll(getLocations());
         this.adapter.notifyDataSetChanged();
     }
 
@@ -51,9 +55,10 @@ public class LocationsListActivity extends RoboListActivity implements View.OnCl
 
     private List<Location> getLocations () {
         try {
-            return new LocationsListTask(this.contextProvider.get()).call();
+            return new LocationsListTask(this).call();
         } catch (Exception e) {
-            Toast.makeText(this.contextProvider.get(), e.toString(), 5);
+            Toast toast = Toast.makeText(this, e.toString(), 5);
+            toast.show();
         }
         return null;
     }
@@ -68,5 +73,13 @@ public class LocationsListActivity extends RoboListActivity implements View.OnCl
     public boolean onOptionsItemSelected(MenuItem item) {
         startActivity(new Intent(this, AddLocationActivity.class));
         return true;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Location location = (Location) getListView().getItemAtPosition(position);
+        Intent editIntent = new Intent(this, EditLocationActivity.class);
+        editIntent.putExtra(ExtraKeys.LOCATION, location);
+        startActivity(editIntent);
     }
 }

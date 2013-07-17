@@ -11,17 +11,20 @@ import java.util.List;
 /**
  * Date: 14.04.13
  */
-public class LocationsListTask extends RoboAsyncTask<List<Location>> {
+public class LocationGetTask extends RoboAsyncTask<Location> {
 
     @Inject
     LocationsService locationsService;
 
-    public LocationsListTask(Context context) {
+    private Integer locationId;
+
+    public LocationGetTask(Context context, Integer locationId) {
         super(context);
+        this.locationId = locationId;
     }
 
     @Override
-    public List<Location> call() throws Exception {
-        return this.locationsService.getAll();
+    public Location call() throws Exception {
+        return this.locationsService.getLocationById(this.locationId);
     }
 }
