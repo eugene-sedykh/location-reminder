@@ -12,5 +12,6 @@
     <string name="get_location">Get Location</string>
     <string name="view_locations">View locations</string>
     <string name="edit_location_activity_name">Edit Location</string>
+    <string name="remove">Remove</string>
 
 </resources>

@@ -70,8 +70,12 @@ public class LocationsService extends BaseService {
     }
 
     public int updateLocation(Location location) {
-        int res = getDatabase().update(DatabaseTables.LOCATIONS, this.converter.convertToDbObject(location),
+        return getDatabase().update(DatabaseTables.LOCATIONS, this.converter.convertToDbObject(location),
                 DatabaseFields.ID + "=?", new String[]{location.getId().toString()});
-        return res;
+    }
+
+    public Integer deleteLocation(Integer locationId) {
+        return getDatabase().delete(DatabaseTables.LOCATIONS, DatabaseFields.ID + "=?",
+                new String[]{locationId.toString()});
     }
 }
