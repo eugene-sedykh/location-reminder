@@ -14,9 +14,11 @@ import org.android.app.locationreminder.dao.domain.Reminder;
 import org.android.app.locationreminder.dao.task.reminder.RemindersListTask;
 import roboguice.activity.RoboListActivity;
 import com.google.inject.Provider;
+import roboguice.inject.ContentView;
 
 import java.util.List;
 
+@ContentView(R.layout.reminders_list_activity)
 public class RemindersListActivity extends RoboListActivity {
     @Inject
     Provider<Context> contextProvider;

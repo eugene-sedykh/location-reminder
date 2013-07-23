@@ -3,8 +3,8 @@ package org.android.app.locationreminder.dao.domain;
 public class Reminder {
 
     private String reminderTitle;
-    private String date;
-    private String locationId;
+    private long date;
+    private int locationId;
 
     public String getReminderTitle() {
         return reminderTitle;
@@ -14,19 +14,19 @@ public class Reminder {
         this.reminderTitle = reminderTitle;
     }
 
-    public String getDate() {
+    public long getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(long date) {
         this.date = date;
     }
 
-    public String getLocationId() {
+    public int getLocationId() {
         return locationId;
     }
 
-    public void setLocationId(String locationId) {
+    public void setLocationId(int locationId) {
         this.locationId = locationId;
     }
 

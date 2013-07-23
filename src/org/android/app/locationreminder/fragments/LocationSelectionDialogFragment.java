@@ -1,6 +1,7 @@
 package org.android.app.locationreminder.fragments;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -8,12 +9,15 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.widget.Toast;
 import org.android.app.locationreminder.R;
+import org.android.app.locationreminder.dao.domain.Location;
+import org.android.app.locationreminder.dao.task.location.LocationsListTask;
 import roboguice.activity.RoboActivity;
 import roboguice.fragment.RoboDialogFragment;
 
 public class LocationSelectionDialogFragment extends DialogFragment {
-	String locations[] = {"home", "work", "school", "university", "store", "bar", "library", "ikea", "parents home", "test location 1", "test location 2"};
+	String[] locations = {"home", "work", "school", "university", "store", "bar", "library", "ikea", "parents home", "test location 1", "test location 2"};
 	ArrayList<Integer> mSelectedItems;
 
     public interface NoticeDialogListener {
@@ -86,4 +90,5 @@ public class LocationSelectionDialogFragment extends DialogFragment {
 
         return builder.create();
     }
+
 }

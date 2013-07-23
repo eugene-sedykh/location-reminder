@@ -25,6 +25,8 @@ import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 @ContentView(R.layout.new_reminder_activity)
 public class AddReminderActivity extends RoboFragmentActivity implements OnDateSetListener, OnTimeSetListener, LocationSelectionDialogFragment.NoticeDialogListener {
@@ -59,6 +61,13 @@ public class AddReminderActivity extends RoboFragmentActivity implements OnDateS
     private static final String LOCATION_PICKER_FRAGMENT_TAG_NAME = "location picker";
     private static final String DATE_DELIMETER = "/";
     private static final String TIME_DELIMETER = ":";
+    private int reminderYear;
+    private int reminderMonth;
+    private int reminderDay;
+    private int reminderHour;
+    private int reminderMinute;
+
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -95,8 +104,10 @@ public class AddReminderActivity extends RoboFragmentActivity implements OnDateS
     private void saveNewReminder() {
         Reminder reminder = new Reminder();
         reminder.setReminderTitle(reminderTitle.getText().toString());
-        reminder.setDate(setDateButton.getText().toString());
-        reminder.setLocationId(setLocationButton.getText().toString());
+        reminder.setDate(getDateTimeInMiliseconds());
+        //TODO: Need to implement getting location id by its title logic
+        //Now setting default fake location id
+        reminder.setLocationId(123);
         new ReminderSaveTask(this.contextProvider.get(), reminder).execute();
     }
 
@@ -126,6 +137,9 @@ public class AddReminderActivity extends RoboFragmentActivity implements OnDateS
     
     public void onDateSet(DatePicker view, int year, int month, int day) {
         setDateButton.setText(month + DATE_DELIMETER + day + DATE_DELIMETER + year);
+        reminderYear = year;
+        reminderMonth = month;
+        reminderDay = day;
     }
     
 	public void setTimeButtonClick(View v) {
@@ -136,6 +150,8 @@ public class AddReminderActivity extends RoboFragmentActivity implements OnDateS
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
     	setTimeButton.setText(hourOfDay + TIME_DELIMETER + minute);
+        reminderHour = hourOfDay;
+        reminderMinute = minute;
     	}
     
 	public void setLocationsButtonClick(View v) {
@@ -156,6 +172,12 @@ public class AddReminderActivity extends RoboFragmentActivity implements OnDateS
     @Override
     public void onDialogNegativeClick(DialogFragment dialog) {
         // User touched the dialog's negative button
+    }
+
+    private long getDateTimeInMiliseconds() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(reminderYear, reminderMonth, reminderDay, reminderHour, reminderMinute, 0);
+        return calendar.getTimeInMillis();
     }
 
 }

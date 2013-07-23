@@ -34,8 +34,8 @@ public class DaoHelper extends SQLiteOpenHelper implements Provider<SQLiteDataba
         "Create table if not exists reminders(" +
             "_id integer primary key autoincrement, " +
             "reminder_title text not null," +
-            "date text," +
-            "locationId text)";
+            "date int," +
+            "locationId int)";
 
     @Inject
     public DaoHelper(Provider<Context> contextProvider) {
