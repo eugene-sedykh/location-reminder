@@ -22,7 +22,7 @@ public class EditLocationActivity extends RoboActivity implements View.OnClickLi
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
         this.location = getIntent().getParcelableExtra(ExtraKeys.LOCATION);
         this.locationTitle.setText(this.location.getTitle());
         locationButton.setOnClickListener(this);
