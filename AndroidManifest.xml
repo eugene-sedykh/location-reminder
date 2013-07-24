@@ -26,7 +26,8 @@
         </activity>
         <activity
         	android:name=".activities.AddReminderActivity"
-        	android:label="@string/new_reminder_activity_name">
+        	android:label="@string/new_reminder_activity_name"
+            android:windowSoftInputMode="stateAlwaysVisible">
     	</activity>
     	<activity
         	android:name=".activities.AddLocationActivity"
