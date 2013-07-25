@@ -20,7 +20,7 @@ public class DaoHelper extends SQLiteOpenHelper implements Provider<SQLiteDataba
     private SQLiteDatabase mDb;
 
     //DatabaseSQLStatement
-    public static final String DATABASE_CREATE =
+    public static final String LOCATIONS_TABLE_CREATE =
         "Create table if not exists locations(" +
             "_id integer primary key autoincrement, " +
             "title text not null," +
@@ -30,6 +30,13 @@ public class DaoHelper extends SQLiteOpenHelper implements Provider<SQLiteDataba
             "longitude real," +
             "latitude real)";
 
+    public static final String REMINDERS_TABLE_CREATE =
+        "Create table if not exists reminders(" +
+            "_id integer primary key autoincrement, " +
+            "reminder_title text not null," +
+            "date int," +
+            "locationId int)";
+
     @Inject
     public DaoHelper(Provider<Context> contextProvider) {
         super(contextProvider.get(), DATABASE_NAME, null, DATABASE_VERSION);
@@ -37,12 +44,15 @@ public class DaoHelper extends SQLiteOpenHelper implements Provider<SQLiteDataba
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(DATABASE_CREATE);
+        db.execSQL(LOCATIONS_TABLE_CREATE);
+        db.execSQL(REMINDERS_TABLE_CREATE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        //Do we really need to drop the tables with all saved data?
         db.execSQL("DROP TABLE IF EXISTS locations");
+        db.execSQL("DROP TABLE IF EXISTS reminders");
         onCreate(db);
     }
 

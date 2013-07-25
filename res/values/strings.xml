@@ -11,6 +11,18 @@
     <string name="menu_settings">Settings</string>
     <string name="get_location">Get Location</string>
     <string name="view_locations">View locations</string>
+    <string name="add_reminder_menu_item_done">Done</string>
+    <string name="add_reminder_menu_item_cancel">Cancel</string>
+    <string name="add_reminder_set_location_label">Set location</string>
+    <string name="location_picker_title">Select location</string>
+    <string name="location_picker_positive_button">OK</string>
+    <string name="location_picker_negative_button">Cancel</string>
+    <string name="add_reminder_reminder_title_label">REMINDER TITLE</string>
+    <string name="add_reminder_date_and_time_label">DATE AND TIME</string>
+    <string name="add_reminder_set_date_button_title">Set date</string>
+    <string name="add_reminder_set_time_button_title">Set time</string>
+    <string name="add_reminder_use_location_switcher_title">Use location?</string>
+    <string name="add_reminder_location_label">LOCATION</string>
     <string name="edit_location_activity_name">Edit Location</string>
     <string name="remove">Remove</string>
 

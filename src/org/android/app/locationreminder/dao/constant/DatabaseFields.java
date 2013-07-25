@@ -15,4 +15,10 @@ public class DatabaseFields {
     public static final String LATITUDE = "latitude";
 
     public static final String LONGITUDE = "longitude";
+
+    public static final String REMINDER_TITLE = "reminder_title";
+
+    public static final String DATE = "date";
+
+    public static final String LOCATION_ID = "locationId";
 }
