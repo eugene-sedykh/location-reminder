@@ -34,8 +34,12 @@
         	android:label="@string/new_location_activity_name">
     	</activity>
         <activity
-                android:name=".activities.LocationsListActivity"
-                android:label="@string/locations_list_activity_name">
+            android:name=".activities.LocationsListActivity"
+            android:label="@string/locations_list_activity_name">
+        </activity>
+        <activity
+            android:name=".activities.EditLocationActivity"
+            android:label="@string/edit_location_activity_name">
         </activity>
     </application>
 
