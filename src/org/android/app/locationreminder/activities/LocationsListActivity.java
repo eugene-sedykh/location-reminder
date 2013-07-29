@@ -1,24 +1,21 @@
 package org.android.app.locationreminder.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.*;
-import com.google.inject.Inject;
-import com.google.inject.Provider;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Toast;
 import org.android.app.locationreminder.R;
 import org.android.app.locationreminder.dao.constant.ExtraKeys;
 import org.android.app.locationreminder.dao.domain.Location;
+import org.android.app.locationreminder.dao.task.location.LocationDeleteTask;
 import org.android.app.locationreminder.dao.task.location.LocationsListTask;
-import roboguice.activity.RoboActivity;
 import roboguice.activity.RoboListActivity;
-import roboguice.inject.ContentView;
-import roboguice.inject.InjectView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LocationsListActivity extends RoboListActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
@@ -34,6 +31,13 @@ public class LocationsListActivity extends RoboListActivity implements View.OnCl
         this.adapter = new ArrayAdapter<Location>(this, android.R.layout.simple_list_item_1, this.locations);
         getListView().setAdapter(this.adapter);
         getListView().setOnItemClickListener(this);
+        registerForContextMenu(getListView());
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.locations_item_menu, menu);
     }
 
     @Override
@@ -77,9 +81,34 @@ public class LocationsListActivity extends RoboListActivity implements View.OnCl
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Location location = (Location) getListView().getItemAtPosition(position);
+        Location location = getLocationByPosition(position);
         Intent editIntent = new Intent(this, EditLocationActivity.class);
         editIntent.putExtra(ExtraKeys.LOCATION, location);
         startActivity(editIntent);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo locationInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+        switch (item.getItemId()) {
+            case R.id.remove_location:
+                removeLocation(locationInfo);
+                return true;
+        }
+        return false;
+    }
+
+    private void removeLocation(AdapterView.AdapterContextMenuInfo info) {
+        Location location = getLocationByPosition(info.position);
+        int deletedRowsNumber = new LocationDeleteTask(this, location.getId()).call();
+        if (deletedRowsNumber != 0) {
+            this.adapter.remove(location);
+            this.adapter.notifyDataSetChanged();
+        }
+    }
+
+    private Location getLocationByPosition(int position) {
+        return (Location) getListView().getItemAtPosition(position);
     }
 }

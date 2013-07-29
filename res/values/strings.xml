@@ -24,5 +24,6 @@
     <string name="add_reminder_use_location_switcher_title">Use location?</string>
     <string name="add_reminder_location_label">LOCATION</string>
     <string name="edit_location_activity_name">Edit Location</string>
+    <string name="remove">Remove</string>
 
 </resources>
