@@ -1,4 +1,4 @@
-package org.android.app.locationreminder.activities;
+package org.android.app.locationreminder.activity;
 
 import android.content.Context;
 import android.os.Bundle;
