@@ -1,38 +1,45 @@
-package org.android.app.locationreminder.fragment;
+package org.android.app.locationreminder.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
-import org.android.app.locationreminder.activity.AddLocationActivity;
-import org.android.app.locationreminder.activity.EditLocationActivity;
+import com.google.inject.Inject;
+import com.google.inject.Provider;
+import org.android.app.locationreminder.R;
 import org.android.app.locationreminder.dao.constant.ExtraKeys;
 import org.android.app.locationreminder.dao.domain.Location;
 import org.android.app.locationreminder.dao.task.location.LocationsListTask;
-import roboguice.fragment.RoboListFragment;
+import roboguice.activity.RoboActivity;
+import roboguice.activity.RoboListActivity;
+import roboguice.inject.ContentView;
+import roboguice.inject.InjectView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LocationsListFragment extends RoboListFragment implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class LocationsListActivity extends RoboListActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+
+    private List<Location> locations;
 
     private ArrayAdapter<Location> adapter;
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        this.adapter = new ArrayAdapter<Location>(view.getContext(), android.R.layout.simple_list_item_1,
-                new ArrayList<Location>());
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.locations = getLocations();
+        this.adapter = new ArrayAdapter<Location>(this, android.R.layout.simple_list_item_1, this.locations);
         getListView().setAdapter(this.adapter);
         getListView().setOnItemClickListener(this);
     }
 
     @Override
-    public void onStart() {
+    protected void onStart() {
         super.onStart();
         refreshDataSet();
-        setListShown(true);
     }
 
     private void refreshDataSet() {
@@ -43,33 +50,35 @@ public class LocationsListFragment extends RoboListFragment implements View.OnCl
 
     @Override
     public void onClick(View v) {
-        makeToast("Bla-bla-bla");
+        startActivity(new Intent(this, AddLocationActivity.class));
     }
 
     private List<Location> getLocations () {
         try {
-            return new LocationsListTask(getActivity()).call();
+            return new LocationsListTask(this).call();
         } catch (Exception e) {
-            makeToast(e.getMessage());
+            Toast toast = Toast.makeText(this, e.toString(), 5);
+            toast.show();
         }
         return null;
     }
 
-    private void makeToast(String text) {
-        Toast toast = Toast.makeText(getActivity(), text.toString(), 5);
-        toast.show();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.locations_list, menu);
+        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        startActivity(new Intent(getActivity(), AddLocationActivity.class));
+        startActivity(new Intent(this, AddLocationActivity.class));
         return true;
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Location location = (Location) getListView().getItemAtPosition(position);
-        Intent editIntent = new Intent(getActivity(), EditLocationActivity.class);
+        Intent editIntent = new Intent(this, EditLocationActivity.class);
         editIntent.putExtra(ExtraKeys.LOCATION, location);
         startActivity(editIntent);
     }
