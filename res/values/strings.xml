@@ -4,7 +4,8 @@
     <string name="app_name">Location Reminder</string>
     <string name="new_reminder_activity_name">New reminder</string>
     <string name="new_location_activity_name">New location</string>
-    <string name="locations_list_activity_name">Locations list</string>
+    <string name="locations_list_fragment_name">Locations</string>
+    <string name="reminders_list_fragment_name">Reminders</string>
     <string name="empty_reminders_list">You have no reminders...</string>
     <string name="add_new_reminder">Add new reminder</string>
     <string name="add_new_location">Add new location</string>

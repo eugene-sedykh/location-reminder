@@ -16,7 +16,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".activities.RemindersListActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,20 +25,16 @@
             </intent-filter>
         </activity>
         <activity
-        	android:name=".activities.AddReminderActivity"
+        	android:name=".activity.AddReminderActivity"
         	android:label="@string/new_reminder_activity_name"
             android:windowSoftInputMode="stateAlwaysVisible">
     	</activity>
     	<activity
-        	android:name=".activities.AddLocationActivity"
+        	android:name=".activity.AddLocationActivity"
         	android:label="@string/new_location_activity_name">
     	</activity>
         <activity
-            android:name=".activities.LocationsListActivity"
-            android:label="@string/locations_list_activity_name">
-        </activity>
-        <activity
-            android:name=".activities.EditLocationActivity"
+            android:name=".activity.EditLocationActivity"
             android:label="@string/edit_location_activity_name">
         </activity>
     </application>
