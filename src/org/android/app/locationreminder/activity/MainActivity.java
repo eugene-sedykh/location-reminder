@@ -79,13 +79,11 @@ public class MainActivity extends RoboFragmentActivity {
             case R.id.add_new_reminder:
                 intent = new Intent(this, AddReminderActivity.class);
                 break;
-            case R.id.add_new_location:
-                intent = new Intent(this, AddLocationActivity.class);
-                break;
-            default:
-                break;
         }
-        startActivity(intent);
-        return true;
+        if (intent != null) {
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

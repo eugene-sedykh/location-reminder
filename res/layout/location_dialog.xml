@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:selectAllOnFocus="true"
+            android:id="@+id/editLocationTitle"
+            android:inputType="text"/>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+        <Button
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="fill_parent"
+                android:text="@string/button_save"
+                android:id="@+id/locationSave"/>
+        <Button
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="fill_parent"
+                android:text="@string/button_cancel"
+                android:id="@+id/locationCancel"/>
+    </LinearLayout>
+</LinearLayout>

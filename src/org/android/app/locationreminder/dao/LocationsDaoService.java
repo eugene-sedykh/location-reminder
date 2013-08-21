@@ -16,12 +16,12 @@ import java.util.List;
  * Date: 13.04.13
  */
 @ContextSingleton
-public class LocationsService extends BaseService {
+public class LocationsDaoService extends BaseService {
 
     private LocationConverter converter;
 
     @Inject
-    public LocationsService(DaoHelper helper, LocationConverter converter) {
+    public LocationsDaoService(DaoHelper helper, LocationConverter converter) {
         super(helper);
         this.converter = converter;
     }
@@ -49,7 +49,7 @@ public class LocationsService extends BaseService {
         return getDatabase().insertOrThrow(DatabaseTables.LOCATIONS, null, this.converter.convertToDbObject(location));
     }
 
-    private boolean locationExists(Location location) {
+    public boolean locationExists(Location location) {
         Cursor cursor = getDatabase().query(DatabaseTables.LOCATIONS, new String[]{DatabaseFields.ID},
                 DatabaseFields.MCC_MNC + "=? AND " + DatabaseFields.LAC + "=? AND " + DatabaseFields.CID + "=?",
                 new String[]{location.getMcc_mnc(), location.getLac(), location.getCid()}, null, null, null);

@@ -2,7 +2,7 @@ package org.android.app.locationreminder.dao.task.location;
 
 import android.content.Context;
 import com.google.inject.Inject;
-import org.android.app.locationreminder.dao.LocationsService;
+import org.android.app.locationreminder.dao.LocationsDaoService;
 import roboguice.util.RoboAsyncTask;
 
 /**
@@ -11,7 +11,7 @@ import roboguice.util.RoboAsyncTask;
 public class LocationDeleteTask extends RoboAsyncTask<Integer> {
 
     @Inject
-    LocationsService locationsService;
+    LocationsDaoService locationsDaoService;
 
     private Integer locationId;
 
@@ -21,6 +21,6 @@ public class LocationDeleteTask extends RoboAsyncTask<Integer> {
     }
 
     public Integer call() {
-        return this.locationsService.deleteLocation(this.locationId);
+        return this.locationsDaoService.deleteLocation(this.locationId);
     }
 }
