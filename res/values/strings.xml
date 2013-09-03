@@ -26,5 +26,10 @@
     <string name="add_reminder_location_label">LOCATION</string>
     <string name="edit_location_activity_name">Edit Location</string>
     <string name="remove">Remove</string>
+    <string name="button_save">Save</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="enter_location_title">Enter location title</string>
+    <string name="disallow_empty_title">Title shouldn\'t be empty</string>
+    <string name="locationExists">Location already exists</string>
 
 </resources>

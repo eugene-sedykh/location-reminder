@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+            android:id="@+id/add_new_location_bar"
+            android:orderInCategory="2"
+            android:showAsAction="always"
+            android:title="@string/add_new_location"
+            android:icon="@drawable/ic_launcher"/>
+</menu>

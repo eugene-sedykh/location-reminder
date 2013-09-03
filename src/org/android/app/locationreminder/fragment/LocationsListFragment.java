@@ -1,15 +1,22 @@
 package org.android.app.locationreminder.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.*;
-import org.android.app.locationreminder.activity.AddLocationActivity;
+import android.support.v4.app.DialogFragment;
+import android.view.*;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import com.google.inject.Inject;
+import org.android.app.locationreminder.R;
 import org.android.app.locationreminder.activity.EditLocationActivity;
+import org.android.app.locationreminder.dao.LocationsDaoService;
 import org.android.app.locationreminder.dao.constant.ExtraKeys;
 import org.android.app.locationreminder.dao.domain.Location;
+import org.android.app.locationreminder.dao.task.location.LocationDeleteTask;
 import org.android.app.locationreminder.dao.task.location.LocationsListTask;
+import org.android.app.locationreminder.util.ApplicationUtil;
+import org.android.app.locationreminder.util.LocationsUtil;
 import roboguice.fragment.RoboListFragment;
 
 import java.util.ArrayList;
@@ -17,7 +24,29 @@ import java.util.List;
 
 public class LocationsListFragment extends RoboListFragment implements View.OnClickListener, AdapterView.OnItemClickListener {
 
+    private static final int ADD_LOCATION_DIALOG_ID = 1;
+
+    private static final String ADD_LOCATION_FRAGMENT_TAG = "addLocationTag";
+
     private ArrayAdapter<Location> adapter;
+
+    @Inject
+    private LocationsDaoService locationsDaoService;
+
+    @Inject
+    private LocationsUtil locationsUtil;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add(ADD_LOCATION_DIALOG_ID,R.id.remove_location,0,R.string.remove);
+    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -26,6 +55,7 @@ public class LocationsListFragment extends RoboListFragment implements View.OnCl
                 new ArrayList<Location>());
         getListView().setAdapter(this.adapter);
         getListView().setOnItemClickListener(this);
+        registerForContextMenu(getListView());
     }
 
     @Override
@@ -43,27 +73,42 @@ public class LocationsListFragment extends RoboListFragment implements View.OnCl
 
     @Override
     public void onClick(View v) {
-        makeToast("Bla-bla-bla");
+        ApplicationUtil.showToast("Bla-bla-bla", getActivity());
     }
 
     private List<Location> getLocations () {
         try {
             return new LocationsListTask(getActivity()).call();
         } catch (Exception e) {
-            makeToast(e.getMessage());
+            ApplicationUtil.showToast(e.getMessage(), getActivity());
         }
         return null;
     }
 
-    private void makeToast(String text) {
-        Toast toast = Toast.makeText(getActivity(), text.toString(), 5);
-        toast.show();
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        startActivity(new Intent(getActivity(), AddLocationActivity.class));
-        return true;
+        switch (item.getItemId()) {
+            case R.id.add_new_location_bar:
+                showNewLocationDialog();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showNewLocationDialog() {
+        Location location = this.locationsUtil.getCurrentLocation();
+        if (!this.locationsDaoService.locationExists(location)) {
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(ExtraKeys.LOCATION, location);
+            DialogFragment fragment = new AddLocationDialogFragment();
+            fragment.setArguments(bundle);
+            fragment.setTargetFragment(this, ADD_LOCATION_DIALOG_ID);
+            fragment.show(getFragmentManager(), ADD_LOCATION_FRAGMENT_TAG);
+        }
+        else {
+            ApplicationUtil.showToast(R.string.locationExists, getActivity());
+        }
     }
 
     @Override
@@ -72,5 +117,43 @@ public class LocationsListFragment extends RoboListFragment implements View.OnCl
         Intent editIntent = new Intent(getActivity(), EditLocationActivity.class);
         editIntent.putExtra(ExtraKeys.LOCATION, location);
         startActivity(editIntent);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.add_location_button, menu);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ADD_LOCATION_DIALOG_ID && resultCode == Activity.RESULT_OK) {
+            this.refreshDataSet();
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo locationInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+        switch (item.getItemId()) {
+            case R.id.remove_location:
+                removeLocation(locationInfo);
+                return true;
+        }
+        return false;
+    }
+
+    private void removeLocation(AdapterView.AdapterContextMenuInfo info) {
+        Location location = getLocationByPosition(info.position);
+        int deletedRowsNumber = new LocationDeleteTask(getActivity(), location.getId()).call();
+        if (deletedRowsNumber != 0) {
+            this.adapter.remove(location);
+            this.adapter.notifyDataSetChanged();
+        }
+    }
+
+    private Location getLocationByPosition(int position) {
+        return (Location) getListView().getItemAtPosition(position);
     }
 }

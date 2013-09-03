@@ -1,9 +1,8 @@
 package org.android.app.locationreminder.dao.task.location;
 
 import android.content.Context;
-import android.widget.TextView;
 import com.google.inject.Inject;
-import org.android.app.locationreminder.dao.LocationsService;
+import org.android.app.locationreminder.dao.LocationsDaoService;
 import org.android.app.locationreminder.dao.domain.Location;
 import roboguice.util.RoboAsyncTask;
 
@@ -13,7 +12,7 @@ import roboguice.util.RoboAsyncTask;
 public class LocationUpdateTask extends RoboAsyncTask<Integer> {
 
     @Inject
-    LocationsService locationsService;
+    LocationsDaoService locationsDaoService;
 
     Location location;
 
@@ -24,6 +23,6 @@ public class LocationUpdateTask extends RoboAsyncTask<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        return this.locationsService.updateLocation(this.location);
+        return this.locationsDaoService.updateLocation(this.location);
     }
 }
