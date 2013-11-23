@@ -8,7 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import org.android.app.locationreminder.R;
 import org.android.app.locationreminder.menu.MainMenuTabListener;
-import org.android.app.locationreminder.menu.PagerAdapter;
+import org.android.app.locationreminder.menu.MainPagerAdapter;
 import roboguice.activity.RoboFragmentActivity;
 import roboguice.inject.InjectView;
 
@@ -57,7 +57,7 @@ public class MainActivity extends RoboFragmentActivity {
 
     private void initializeViewPager() {
         this.viewPager.setOnPageChangeListener(this.pageChangeListener);
-        this.viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
+        this.viewPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager()));
         this.viewPager.setCurrentItem(0);
     }
 

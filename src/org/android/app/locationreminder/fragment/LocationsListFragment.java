@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import com.google.inject.Inject;
 import org.android.app.locationreminder.R;
-import org.android.app.locationreminder.activity.EditLocationActivity;
 import org.android.app.locationreminder.dao.LocationsDaoService;
 import org.android.app.locationreminder.dao.constant.ExtraKeys;
 import org.android.app.locationreminder.dao.domain.Location;
@@ -29,6 +31,11 @@ public class LocationsListFragment extends RoboListFragment implements View.OnCl
     private static final String ADD_LOCATION_FRAGMENT_TAG = "addLocationTag";
 
     private ArrayAdapter<Location> adapter;
+
+    private Fragment fragment;
+
+//    @InjectView(R.id.viewpager)
+//    private ViewPager viewPager;
 
     @Inject
     private LocationsDaoService locationsDaoService;
@@ -56,13 +63,19 @@ public class LocationsListFragment extends RoboListFragment implements View.OnCl
         getListView().setAdapter(this.adapter);
         getListView().setOnItemClickListener(this);
         registerForContextMenu(getListView());
+//        this.viewPager.setAdapter(new DetailsPagerAdapter(getChildFragmentManager()));
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.list_fragment, null);
     }
 
     @Override
     public void onStart() {
         super.onStart();
         refreshDataSet();
-        setListShown(true);
+        //setListShown(true);
     }
 
     private void refreshDataSet() {
@@ -113,10 +126,15 @@ public class LocationsListFragment extends RoboListFragment implements View.OnCl
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Location location = (Location) getListView().getItemAtPosition(position);
-        Intent editIntent = new Intent(getActivity(), EditLocationActivity.class);
-        editIntent.putExtra(ExtraKeys.LOCATION, location);
-        startActivity(editIntent);
+//        Location location = (Location) getListView().getItemAtPosition(position);
+//        Intent editIntent = new Intent(getActivity(), EditLocationActivity.class);
+//        editIntent.putExtra(ExtraKeys.LOCATION, location);
+//        startActivity(editIntent);
+        this.fragment = new LocationDetailsFragment();
+        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.viewpager,this.fragment,"blablatag");
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -155,5 +173,18 @@ public class LocationsListFragment extends RoboListFragment implements View.OnCl
 
     private Location getLocationByPosition(int position) {
         return (Location) getListView().getItemAtPosition(position);
+    }
+
+    @Override
+    public void onDestroyView() {
+        try {
+            FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+            fragmentTransaction.remove(this.fragment);
+            fragmentTransaction.commit();
+        } catch (Exception e) {
+            Log.getStackTraceString(e);
+        }
+
+        super.onDestroyView();
     }
 }

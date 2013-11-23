@@ -9,12 +9,16 @@ import org.android.app.locationreminder.fragment.RemindersListFragment;
 /**
  * Date: 02.08.13
  */
-public class PagerAdapter extends FragmentPagerAdapter {
+public class MainPagerAdapter extends FragmentPagerAdapter {
 
-    private final Fragment[] frags = new Fragment[2];
+    protected final Fragment[] frags = new Fragment[2];
 
-    public PagerAdapter(FragmentManager fm) {
+    public MainPagerAdapter(FragmentManager fm) {
         super(fm);
+        initFragments();
+    }
+
+    protected void initFragments() {
         this.frags[0] = new RemindersListFragment();
         this.frags[1] = new LocationsListFragment();
     }
